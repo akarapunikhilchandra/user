@@ -1,0 +1,36 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: user 
+  namespace: roboshop 
+  labels: 
+    app: user
+    tier: app 
+    project: roboshop 
+spec: 
+  replicas: 1 
+  selector:
+    matchLabels: 
+      app: user
+      tier: app 
+      project: roboshop 
+  template: 
+    metadata: 
+      labels: 
+        app: user 
+        tier: app 
+        project: roboshop 
+    spec: 
+      containers:   
+      - name: user 
+        image: "akarapunikhilchandra/user:{{ .Values.deployment.imageVersion }}"
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "68Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+        envFrom: 
+        - configMapRef: 
+            name: user
